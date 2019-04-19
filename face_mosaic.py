@@ -112,7 +112,7 @@ def change_face_image(image, face_image, face_coor):
         y2 = y_c + y_2
         return x1, y1, x2, y2
     
-    x1, y1, x2, y2 = change_rate(1, face_coor)
+    x1, y1, x2, y2 = change_rate(1.5, face_coor)
     # change dtype
     face_h = abs(y2-y1);face_w = abs(x2-x1)
     face_image = cv.resize(face_image, (face_h, face_w)).astype('uint8')
