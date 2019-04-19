@@ -1,2 +1,4 @@
 .vscode/*
 test.jpg
+data/*
+!data/haarcascade_frontalface_default.xml
