@@ -111,11 +111,12 @@ def change_face_image(image, face_image, face_coor):
         x2 = x_c + x_2
         y2 = y_c + y_2
         return x1, y1, x2, y2
-    
-    x1, y1, x2, y2 = change_rate(1.5, face_coor)
+
+    #x1, y1, x2, y2 = change_rate(1.5, face_coor)
+    x1, y1, x2, y2 = face_coor
     # change dtype
     face_h = abs(y2-y1);face_w = abs(x2-x1)
-    face_image = cv.resize(face_image, (face_h, face_w)).astype('uint8')
+    face_image = cv.resize(face_image, (face_h, face_w), interpolation=cv.INTER_AREA).astype('uint8')
     face_image_rgb = face_image[:,:,:3]
     face_iamge_alpha = face_image[:,:,-1]
     print(np.max(face_iamge_alpha))
@@ -126,13 +127,13 @@ def change_face_image(image, face_image, face_coor):
     return image
 
 
-def change_face(image):
+def change_face(image_path):
     #image_path = "test.jpg"
     image = load_image(image_path)
     faces = face_detection(image)
-    faces_random_index = random.sample(range(15),2)
+    faces_random_index = random.sample(range(15),len(faces))
     for i, face in enumerate(faces):
-        face_image = face_image = load_fake_face_png(faces_random_index[i])
+        face_image = load_fake_face_png(faces_random_index[i])
         image = change_face_image(image,face_image,face)
     return image
 
@@ -147,7 +148,7 @@ def change_face_videocapture():
     cv.destroyAllWindows()
 
 if __name__ == "__main__":
-    image_path = "test.jpg"
+    image_path = "2.jpg"
     #mosaic_videocapture()
     image = change_face(image_path)
     cv.imshow('t', image)
